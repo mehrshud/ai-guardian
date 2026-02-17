@@ -1,0 +1,91 @@
+use std::fs::File;
+use std::io;
+use std::path::Path;
+use std::env;
+use std::collections::HashMap;
+use serde::{Serialize, Deserialize};
+use serde_json;
+
+// Define the Config struct
+#[derive(Serialize, Deserialize, Debug)]
+struct Config {
+    debug: bool,
+    db_url: String,
+}
+
+// Define the Vulnerability struct
+#[derive(Serialize, Deserialize, Debug)]
+struct Vulnerability {
+    id: i32,
+    description: String,
+    severity: String,
+}
+
+// Define the PerformanceMetric struct
+#[derive(Serialize, Deserialize, Debug)]
+struct PerformanceMetric {
+    id: i32,
+    metric: String,
+    value: f64,
+}
+
+// Define the User struct
+#[derive(Serialize, Deserialize, Debug)]
+struct User {
+    id: i32,
+    name: String,
+    email: String,
+}
+
+// Function to load the config from a file
+fn load_config(file_path: &str) -> Result<Config, io::Error> {
+    let file = File::open(file_path)?;
+    let config: Config = serde_json::from_reader(file)?;
+    Ok(config)
+}
+
+// Function to load the vulnerability scanner
+fn load_vulnerability_scanner(config: &Config) -> Result<VulnerabilityScanner, io::Error> {
+    let db_url = &config.db_url;
+    let scanner = VulnerabilityScanner::new(db_url)?;
+    Ok(scanner)
+}
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    if args.len() < 2 {
+        eprintln!("Error: Missing config file path.");
+        return;
+    }
+    let config_path = &args[1];
+    match load_config(config_path) {
+        Ok(config) => {
+            println!("Loaded config: {:?}", config);
+            match load_vulnerability_scanner(&config) {
+                Ok(scanner) => {
+                    println!("Loaded vulnerability scanner.");
+                }
+                Err(err) => {
+                    eprintln!("Error loading vulnerability scanner: {}", err);
+                }
+            }
+        }
+        Err(err) => {
+            eprintln!("Error loading config: {}", err);
+        }
+    }
+}
+
+// VulnerabilityScanner struct
+#[derive(Debug)]
+struct VulnerabilityScanner {
+    db_url: String,
+}
+
+impl VulnerabilityScanner {
+    fn new(db_url: &str) -> Result<Self, io::Error> {
+        Ok(VulnerabilityScanner {
+            db_url: db_url.to_string(),
+        })
+    }
+}
