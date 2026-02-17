@@ -1,0 +1,100 @@
+# IDE Files
+.vscode/
+.idea/
+.eclipse/
+.netbeans/
+.intellij/
+
+# OS Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Rust
+target/
+Cargo.lock
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# TensorFlow
+tensorflow_logs/
+
+# nginx
+nginx.conf
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Terraform
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+
+# Secrets
+secrets.json
+secrets.yaml
+secrets.toml
+.env
+config.json
+config.yaml
+config.toml
+
+# Log Files
+*.log
+logs/
+
+# Temporary Files
+*.tmp
+temp/
+tmp/
+
+# Miscellaneous
+*.swap
+*.swo
+*.swp
+*.gitignore
+README.md
+LICENSE
+CHANGELOG.md
+*.md
+*.txt
+*.csv
+*.json
+*.xml
+*.yaml
+*.yml
+*.toml
+*.lock
+
+# Python Bytecode
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+
+# Empty Directories
+ Empty Dir/ 
+
+# Specific Files
+.env.example
+requirements.txt
+Pipfile
+Pipfile.lock 
+
+# Node Modules for some dependencies
+node_modules/
+
+# Rust Documentation
+target/doc/ 
+
+# Systemd Files
+*.service
+*.timer 
+
+# Exclude Files starting with ~ (temp)
+*~
